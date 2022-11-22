@@ -7,8 +7,8 @@ import shutil
 
 # 2. Define Images to Collect
 
-labels = ['Left', 'Right', 'Up', 'Down']
-number_imgs = 2
+labels = ['Left', 'Right' ,'Up' ,'Down']
+number_imgs = 5
 
 # 3. Setup Folders 
 IMAGES_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'collectedimages')
@@ -62,15 +62,17 @@ TRAIN_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'train')
 TEST_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'test')
 
 if not os.path.exists(TRAIN_PATH) or os.path.exists(TEST_PATH):
+    os.makedirs(TEST_PATH)
+    os.makedirs(TRAIN_PATH)
     for label in labels:
         count =0
         path = os.path.join(IMAGES_PATH, label)
         for p in os.listdir(path):
             print(p)
             if count<1 :
-                shutil.copy(p, TEST_PATH)
+                shutil.copy(os.path.join(path,p), TEST_PATH)
             else:
-                shutil.copy(p, TRAIN_PATH)
+                shutil.copy(os.path.join(path,p), TRAIN_PATH)
             count +=1
             
 
