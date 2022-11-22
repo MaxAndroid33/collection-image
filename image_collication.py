@@ -8,7 +8,7 @@ import shutil
 # 2. Define Images to Collect
 
 labels = ['Left', 'Right', 'Up', 'Down']
-number_imgs = 5
+number_imgs = 2
 
 # 3. Setup Folders 
 IMAGES_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'collectedimages')
@@ -24,27 +24,27 @@ for label in labels:
 
 
 
-# # 4. Capture Images
-# for label in labels:
-#     cap = cv2.VideoCapture(0)
-#     print('Collecting images for {}'.format(label))
-#     time.sleep(5)
-#     for imgnum in range(number_imgs):
-#         print('Collecting image {}'.format(imgnum))
-#         imgname = os.path.join(IMAGES_PATH,label,label+'.'+'{}.jpg'.format(str(uuid.uuid1())))    
-#         while(1):
-#             ret, frame = cap.read()
-#             cv2.imshow('frame', frame)
-#             if cv2.waitKey(1) & 0xFF == ord('s'):
-#                 break
-#             if cv2.waitKey(1) & 0xFF == ord('q'):
-#                 cap.release()
-#                 cv2.destroyAllWindows()
-#         cv2.imwrite(imgname, frame)        
-#         time.sleep(2)
+# 4. Capture Images
+for label in labels:
+    cap = cv2.VideoCapture(0)
+    print('Collecting images for {}'.format(label))
+    time.sleep(5)
+    for imgnum in range(number_imgs):
+        print('Collecting image {}'.format(imgnum))
+        imgname = os.path.join(IMAGES_PATH,label,label+'.'+'{}.jpg'.format(str(uuid.uuid1())))    
+        while(1):
+            ret, frame = cap.read()
+            cv2.imshow('frame', frame)
+            if cv2.waitKey(1) & 0xFF == ord('s'):
+                break
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                cap.release()
+                cv2.destroyAllWindows()
+        cv2.imwrite(imgname, frame)        
+        time.sleep(2)
 
-# cap.release()
-# cv2.destroyAllWindows()
+cap.release()
+cv2.destroyAllWindows()
 
 
 # 5. Image Labelling
@@ -60,5 +60,19 @@ subprocess.call(f"cd {LABELIMG_PATH} && python labelImg.py", shell=True)
 
 TRAIN_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'train')
 TEST_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'test')
+
+if not os.path.exists(TRAIN_PATH) or os.path.exists(TEST_PATH):
+    for label in labels:
+        count =0
+        path = os.path.join(IMAGES_PATH, label)
+        for p in os.listdir(path):
+            print(p)
+            if count<1 :
+                shutil.copy(p, TEST_PATH)
+            else:
+                shutil.copy(p, TRAIN_PATH)
+            count +=1
+            
+
 
 
