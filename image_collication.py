@@ -55,5 +55,9 @@ import subprocess
 subprocess.call(f"cd {LABELIMG_PATH} && pyrcc5 -o libs/resources.py resources.qrc", shell=True) 
 subprocess.call(f"cd {LABELIMG_PATH} && python labelImg.py", shell=True) 
 
+# 6. Move them into a Training and Testing Partition
+
+TRAIN_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'train')
+TEST_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'test')
 
 
