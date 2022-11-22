@@ -49,7 +49,7 @@ cv2.destroyAllWindows()
 # 5. Image Labelling
 LABELIMG_PATH = os.path.join('Tensorflow', 'labelimg')
 if not os.path.exists(LABELIMG_PATH):
-    shutil.copytree(r"F:\Design_Programs\Season5_LABs\5th_First_Semster_LABs\AI_Labs\OurProject\labelimg",r"F:\Design_Programs\Season5_LABs\5th_First_Semster_LABs\AI_Labs\OurProject\main\Tensorflow\labelimg")    
+    shutil.copytree(r"F:\Design_Programs\Season5_LABs\5th_First_Semster_LABs\AI_Labs\OurProject\labelimg",LABELIMG_PATH)    
 
 import subprocess
 subprocess.call(f"cd {LABELIMG_PATH} && pyrcc5 -o libs/resources.py resources.qrc", shell=True) 
