@@ -37,11 +37,12 @@ for label in labels:
             cv2.imshow('frame', frame)
             if cv2.waitKey(1) & 0xFF == ord('s'):
                 break
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                cap.release()
+                cv2.destroyAllWindows()
         cv2.imwrite(imgname, frame)        
         time.sleep(2)
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
 cap.release()
 cv2.destroyAllWindows()
 
@@ -59,5 +60,6 @@ subprocess.call(f"cd {LABELIMG_PATH} && python labelImg.py", shell=True)
 
 TRAIN_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'train')
 TEST_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'test')
+ARCHIVE_PATH = os.path.join('Tensorflow', 'workspace', 'images', 'archive.tar.gz')
 
-
+subprocess.call(f"tar -czvf {ARCHIVE_PATH} {TRAIN_PATH} {TEST_PATH}", shell=True) 
